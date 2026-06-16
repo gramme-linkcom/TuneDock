@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>TuneDock Debug Player</title>
+</head>
+<body>
+  <h1>TuneDock Debug Player</h1>
+
+  <button onclick="loadTracks()">曲一覧を読み込む</button>
+
+  <ul id="tracks"></ul>
+
+  <audio id="player" controls style="width: 100%; margin-top: 24px;"></audio>
+
+  <script>
+    const API_BASE = "http://localhost:8080";
+
+    async function loadTracks() {
+      const res = await fetch(`${API_BASE}/api/tracks`);
+      const tracks = await res.json();
+
+      const ul = document.getElementById("tracks");
+      ul.innerHTML = "";
+
+      for (const track of tracks) {
+        const li = document.createElement("li");
+
+        const button = document.createElement("button");
+        button.textContent = `▶ ${track.title}`;
+        button.onclick = () => playTrack(track.id);
+
+        li.appendChild(button);
+        ul.appendChild(li);
+      }
+    }
+
+    function playTrack(id) {
+      const player = document.getElementById("player");
+      player.src = `${API_BASE}/stream/${id}`;
+      player.play();
+    }
+  </script>
+</body>
+</html>
