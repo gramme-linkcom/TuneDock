@@ -1,0 +1,13 @@
+services:
+  tunedock:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app/backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - ./Musics:/music:ro
+    command: go run ./cmd/tunedock

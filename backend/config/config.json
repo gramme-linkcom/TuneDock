@@ -1,0 +1,9 @@
+{
+  "library_paths": [
+    {
+      "name": "Main Music",
+      "path": "/music",
+      "enabled": true
+    }
+  ]
+}
