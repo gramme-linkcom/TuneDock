@@ -4,6 +4,11 @@
       "name": "Main Music",
       "path": "/music",
       "enabled": true
+    },
+    {
+      "name": "Main Music",
+      "path": "/musics",
+      "enabled": true
     }
   ]
 }

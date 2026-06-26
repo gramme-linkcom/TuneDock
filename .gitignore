@@ -208,5 +208,6 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/go,node,nextjs,database
 
 /Musics
+/Music
 /backend/data/cache
 /backend/data/music

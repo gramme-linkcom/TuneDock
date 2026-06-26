@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS artists (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
   sort_name TEXT,
+  cover_id  TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -12,7 +13,7 @@ CREATE TABLE IF NOT EXISTS albums (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
   year INTEGER,
-  cover_path TEXT,
+  cover_id TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -38,6 +39,8 @@ CREATE TABLE IF NOT EXISTS tracks (
 
   file_path TEXT NOT NULL UNIQUE,
   file_size INTEGER,
+
+  cover_id  TEXT,
 
   codec TEXT,
   bit_depth INTEGER,

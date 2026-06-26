@@ -9,5 +9,6 @@ services:
     volumes:
       - ./backend:/app/backend
       - ./frontend:/app/frontend
-      - ./Musics:/music:ro
+      - ./Music:/music:ro
+      - ./Musics:/musics:ro
     command: go run ./cmd/tunedock

@@ -2,45 +2,43 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>TuneDock Debug Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TuneDock</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <h1>TuneDock Debug Player</h1>
+  <div class="app">
+    <aside class="sidebar">
+      <h1>TuneDock</h1>
 
-  <button onclick="loadTracks()">曲一覧を読み込む</button>
+      <button id="homeBtn">Home</button>
+      <button id="tracksBtn">Tracks</button>
+      <button id="albumsBtn">Albums</button>
+      <button id="libraryUpdateBtn">Library Update</button>
+    </aside>
 
-  <ul id="tracks"></ul>
+    <main class="main">
+      <header class="topbar">
+        <input id="searchInput" type="text" placeholder="Search is coming soon..." disabled />
+      </header>
 
-  <audio id="player" controls style="width: 100%; margin-top: 24px;"></audio>
+      <section>
+        <h2>Tracks</h2>
+        <div id="trackList" class="track-list"></div>
+      </section>
+    </main>
 
-  <script>
-    const API_BASE = "http://localhost:8080";
+    <footer class="player">
+      <img id="playerCover" class="player-cover" src="" alt="" />
+      <div class="player-info">
+        <div id="playerTitle">No track selected</div>
+        <div id="playerMeta">TuneDock</div>
+      </div>
 
-    async function loadTracks() {
-      const res = await fetch(`${API_BASE}/api/tracks`);
-      const tracks = await res.json();
+      <audio id="audioPlayer" controls></audio>
+    </footer>
+  </div>
 
-      const ul = document.getElementById("tracks");
-      ul.innerHTML = "";
-
-      for (const track of tracks) {
-        const li = document.createElement("li");
-
-        const button = document.createElement("button");
-        button.textContent = `▶ ${track.title}`;
-        button.onclick = () => playTrack(track.id);
-
-        li.appendChild(button);
-        ul.appendChild(li);
-      }
-    }
-
-    function playTrack(id) {
-      const player = document.getElementById("player");
-      player.src = `${API_BASE}/stream/${id}`;
-      player.play();
-    }
-  </script>
+  <script src="/static/app.js"></script>
 </body>
-  <audio controls src="/api/stream?id=2514d985-735b-4a52-b712-770c168530de"></audio>
 </html>

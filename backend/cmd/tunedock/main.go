@@ -7,6 +7,7 @@ import (
 	"tunedock/internal/api"
 	"tunedock/internal/db"
 	"tunedock/internal/library"
+	"tunedock/internal/system"
 )
 
 type Track struct {
@@ -22,6 +23,7 @@ var tracks = []Track{
 var tmpl = template.Must(template.ParseFiles("../frontend/index.html"))
 
 func main() {
+	system.Init()
 
 	database, err := db.Open("./data/tunedock.db")
 	if err != nil {
@@ -48,9 +50,16 @@ func main() {
 
 	mux.HandleFunc("GET /library/update", library.LibraryUpdateHandler(database))
 	mux.HandleFunc("GET /api/albums/detail", api.AlbumHandler(database))
+	
+	mux.HandleFunc("GET /api/tracks", api.TrackListsHandler(database))
 	mux.HandleFunc("GET /api/tracks/detail", api.TrackHandler(database))
+	mux.HandleFunc("GET /api/tracks/data/cover", api.TrackCoverHandler(database))
+	
 	mux.HandleFunc("GET /api/stream", api.TrackFileServeHandler(database))
-	mux.HandleFunc("GET /api/tracks/data/cover", api.TrackCoverHandler())
+
+	mux.HandleFunc("GET /api/search", api.SearchHandler(database))
+	
+	mux.Handle("/static/",http.StripPrefix("/static/", http.FileServer(http.Dir("../frontend/static/"))),)
 
 	log.Println("http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))

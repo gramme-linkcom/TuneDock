@@ -11,6 +11,7 @@ type Track struct {
 
 	FilePath string `json:"-"`
 	FileSize int64  `json:"file_size"`
+	CoverID  string `json:"cover_id,omitempty"`
 
 	Codec      string `json:"codec"`
 	BitDepth   *int   `json:"bit_depth,omitempty"`

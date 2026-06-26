@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -19,7 +20,7 @@ func contentTypeFromAudioPath(path string) string {
 		return "audio/flac"
 	case ".mp3":
 		return "audio/mpeg"
-	case ".m4a", ".mp4":
+	case ".m4a":
 		return "audio/mp4"
 	case ".wav":
 		return "audio/wav"
@@ -49,8 +50,13 @@ func TrackFileServeHandler(database *sql.DB) http.HandlerFunc{
 		}
 
 		trackData, err := repository.GetTrackByID(database, trackId)
+		fmt.Printf("[LOG]: API ACCESSED\nrequest: stream\nid: %s\nresult: (title)%s\n", trackId, trackData.Title)
 		if err != nil {
 			http.Error(w, "failed to get track: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if trackData == nil {
+			http.Error(w, "failed to get track: id is not found", http.StatusBadRequest)
 			return
 		}
 

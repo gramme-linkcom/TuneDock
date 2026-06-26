@@ -28,7 +28,11 @@ func AlbumHandler(database *sql.DB) http.HandlerFunc{
 		
 		album, err := repository.GetAlbumByID(database, albumId)
 		if err != nil {
-			http.Error(w, "failed to get album: "+err.Error(), http.StatusInternalServerError)
+			http.Error(w, "failed to get track: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if album == nil {
+			http.Error(w, "failed to get track: id is not found", http.StatusBadRequest)
 			return
 		}
 
